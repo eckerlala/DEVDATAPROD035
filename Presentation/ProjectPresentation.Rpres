@@ -1,0 +1,69 @@
+Study of Behaviour of a Linear Model
+========================================================
+author: Wolfgang Ecker-Lala
+date: 2015-12-27
+
+The Linear Model
+========================================================
+
+A Linear Model is described by following equation:
+y=kx+d
+
+
+where
+- x is the input variable of the model (you can change the number of x which should be used)
+- k is the slope
+- d is the intercept
+- y is the output
+
+The linear model can be parameterized by changing the values **k** and **d** in the application.
+
+After you have changed one of the values, press the *Calculate* button please.
+
+Linear Model with some Disturbances
+========================================================
+In reality we will not have an exact linear model. We will have some disturbances and the equation changes to:y=kx+d+eps
+
+**eps** is called the stochastic error.
+<small>
+In this application you can model the **eps** by using a normal distribution.
+This distribution is described by **mue** and **sigma**.
+
+The result of the modified values will be shown in four tabs.
+- Plot of Model
+- Plot of Residuals
+- Fitted Model Summary
+- Table (which only shows the calulated values - this needs no further explanation)
+
+After you have changed one of the values, press the *Calculate* button please.
+</small>
+
+Plot of Model - Tab
+========================================================
+In the "Plot of Model" tab you can see how the real model (color RED) behaves against the model generated with disturbances (color BLUE).
+
+```{r,echo=FALSE}
+set.seed(4711)
+n<-50
+x<-1:n
+y<-5*x+1
+y_eps<-y+rnorm(n,3,10)
+y_min<-min(y,y_eps)
+y_max<-max(y,y_eps)
+myModel<-lm(y_eps~x)
+plot(x,y,type="l",col="red",main="",xlab="x",ylab="y",ylim=c(y_min,y_max))
+par(new=TRUE)
+plot(x,y_eps,type="p",col="black",main="",xlab="x",ylab="y",ylim=c(y_min,y_max))
+par(new=TRUE)
+plot(x,myModel$fitted.values,type="l",col="blue",main="",xlab="x",ylab="y",ylim=c(y_min,y_max))
+```
+
+Plot of Residuals - Tab
+========================================================
+In the "Plot of Residuals" tab you can see the distribution of the residuals.
+
+```{r, echo=FALSE}
+hist(myModel$residuals,main="",xlab="residual of model")
+```
+
+
